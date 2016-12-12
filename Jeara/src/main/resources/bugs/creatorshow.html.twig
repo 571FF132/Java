@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Bug {{ bug.title }}{% endblock %}
+
+{% block mainContainer %}
+    <div>
+        <h1>Bugs</h1>
+    </div>
+    <div>
+        <h2>Sort Bugs by:</h2>||
+        <a href="/bugs">creation date(default)</a> ||
+        <a href="/creator"><b>CREATOR</b></a> ||
+        <a href="/tags">tags</a> ||
+        <a href="/assignee">assignee</a> ||
+        <a href="/status">status</a> ||
+    </div>
+
+    <div>
+        <h2>Bugs Created by {{ Creator.name }}</h2>
+    </div>
+
+    <div>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Bug Number </th>
+                <th>Bug Title</th>
+                <th>Bug Create Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for Bug in Bugs %}
+                <tr>
+                    <td>{{ Bug.bugId }}</td>
+                    <td><a href="/bugs/{{ Bug.bugId }}">{{ Bug.title }}</a></td>
+                    <td>{{ Bug.created }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

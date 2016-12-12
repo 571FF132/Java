@@ -1,0 +1,22 @@
+########################################################################
+JEARA  Bug Tracking Webapp for CS410 DATABASES at Boise State University
+########################################################################
+
+###Authors:
+Ben Neely
+Justin Stiffler
+Tyler Cannon
+
+###Running:
+
+Use Maven to build project from pom.xml
+
+The webapp utilizes a PostgreSQL database so you will need to have that
+installed on your computer, also.
+
+Run jeara.sql to build the tables in your postgres database.
+Run jeara-data.sql to load the database with some default 'dummy' data 
+and initialize the search function.
+
+###Enjoy!
+  

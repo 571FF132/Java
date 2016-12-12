@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Jeara - Home{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('input[type="button"]').click(function(){
+                if($(this).attr("value")=="all"){
+                    $(".box").not(".allstatus").hide();
+                    $(".allstatus").show();
+                }
+                if($(this).attr("value")=="open"){
+                    $(".box").not(".openstatus").hide();
+                    $(".openstatus").show();
+                }
+                if($(this).attr("value")=="closed"){
+                    $(".box").not(".closedstatus").hide();
+                    $(".closedstatus").show();
+                }
+                if($(this).attr("value")=="rejected"){
+                    $(".box").not(".rejectedstatus").hide();
+                    $(".rejectedstatus").show();
+                }
+            });
+        });
+    </script>
+</head>
+<style>
+    div#searchBar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 50px;
+        left: 150px;
+        background-color: #EF6C00;
+    }
+
+    div#sidenav {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 150px;
+        background-color: #EF6C00;
+    }
+
+    div#mainContainer {
+        position: absolute;
+        top: 50px;
+        bottom: 0;
+        left: 150px;
+        right: 0;
+        padding: 20px;
+    }
+
+    span.header {
+        line-height: 1.8em;
+        font-size: 1.8em;
+        padding-left: 20px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .search {
+        margin: auto;
+        position: absolute;
+        top: .75em;
+        left: 15%;
+        right:15%;
+    }
+
+    .searchItem {
+        width:90%;
+        display: inline-flex;
+        margin: auto;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid white;
+        outline: none;
+    }
+
+    .searchItem:focus {
+        border-bottom: 3px solid white;
+    }
+
+    .searchSubmit {
+        display: inline-flex;
+        padding: 5px 10px;
+        color: white;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+
+    .searchSubmit:hover {
+        background: black;
+        color:white;
+        border-radius: 4px;
+    }
+
+    span.greeting {
+        position: absolute;
+        top: 25px;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        margin-right:10px;
+        height: 50px;
+        width: auto;
+        text-align: center;
+        color: white;
+    }
+
+    ul.nav {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul.nav > li {
+        padding: 10px 0;
+    }
+
+    a.navLink {
+        color: white;
+        border: none;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a.logo {
+        color: white;
+        border: none;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a.logo:hover {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    a.navLink:hover {
+        font-weight: bold;
+        font-size: 1.1em;
+        background-color: black !important;
+        color: white;
+    }
+
+    table, td, th {
+        border: 1px solid black;
+        width: 45%;
+    }
+
+    th {
+        height: 50px;
+        text-align: left;
+        background-color : #EF6C00;
+        color: white;
+    }
+
+    td {
+        height: 50px;
+        vertical-align: bottom;
+    }
+
+    .btn-primary > a {
+        color: white;
+    }
+
+    .thumbnail {
+        padding:0px;
+    }
+
+    .panel {
+        position:relative;
+    }
+
+    .panel>.panel-heading:after,.panel>.panel-heading:before{
+        position:absolute;
+        top:11px;left:-16px;
+        right:100%;
+        width:0;
+        height:0;
+        display:block;
+        content:" ";
+        border-color:transparent;
+        border-style:solid solid outset;
+        pointer-events:none;
+    }
+
+    .panel>.panel-heading:after{
+        border-width:7px;
+        border-right-color:#f7f7f7;
+        margin-top:1px;
+        margin-left:2px;
+    }
+    .panel>.panel-heading:before{
+        border-right-color:#ddd;
+        border-width:8px;
+    }
+
+</style>
+<body>
+    <div id="searchBar">
+        {% if userId != null %}
+            <div class="search">
+                <form action="/search" method="get">
+                    <label style="color:white; width:80%;">
+                        Search:
+                        <input class="searchItem" type="search" name="q" value="{{ query }}">
+                    </label>
+                    <button class="searchSubmit" style="display:inline-flex" type="submit">Go</button>
+                </form>
+            </div>
+        {% endif %}
+        <span class="greeting" style="float:right">
+            {% block greeting %}
+                {% if userId != null %}
+                    Hello {{ user.name }}!
+                    <a style="color:white; cursor: pointer" href="/logout">Sign Out?</a>
+                {% else %}
+                    <a style="color:white; cursor: pointer" href="/">Sign In</a>
+                {% endif %}
+            {% endblock %}
+        </span>
+    </div>
+    <div id="sidenav">
+        <div style="height:50px; width:inherit;">
+            <span class="header"><a class="logo" href="/">Jeara</a></span>
+            <ul class="nav">
+                {% if userId != null %}
+                    <li><a class="navLink" href="/users/{{ userId }}">User Profile</a></li>
+                    <li><a class="navLink" href="/bugs">Bugs</a></li>
+                    <li><a class="navLink" href="/users">Users</a></li>
+                    <li><a class="navLink" href="/milestones">Milestones</a></li>
+                    <li><a class="navLink" href="/tags">Tags</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div id="mainContainer">
+        <!--The index page has a special param to differentiate it from other pages.
+            If we're on the index page, show the log in/create options, otherwise,
+            we need to ensure that we're not on the index page and then validate credentials.
+            If the credentials are invalid, don't display any content.-->
+        {% if idx != null %}
+            {% block index %}{% endblock %}
+        {% elseif userId != null and idx == null %}
+            {% block mainContainer %}{% endblock %}
+        {% elseif idx == null %}
+            <p>Please <a href="/">log in</a> to use this feature!</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Bugs{% endblock %}
+
+{% block mainContainer %}
+    <h1>
+        Bugs
+        <button type="button" onclick="location.href='/bug/new/'" class="btn btn-primary">New Bug</button>
+    </h1>
+
+    <h2>Bugs by CREATION DATE(DEFAULT)</h2>
+
+    <div>
+        <h3>Browse Bugs by:</h3>||
+        <a href="/bugs"><b>CREATION DATE(DEFAULT)</b></a> ||
+        <a href="/creator">creator</a> ||
+        <a href="/tags">tags</a> ||
+        <a href="/assignee">assignee</a> ||
+        <a href="/status">status</a> ||
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <h2>Title</h2>
+        </div>
+        <div class="col-md-4">
+            <h2>Details</h2>
+        </div>
+        <div class="col-md-2">
+            <h2>Created</h2>
+        </div>
+        <div class="col-md-2">
+            <h2>Assignee</h2>
+        </div>
+    </div>
+    {% for Bug in Bugs %}
+        <div class="row">
+            <div class="col-md-2">
+                <a href="/bugs/{{Bug.bugId}}/">{{ Bug.title }}</a>
+            </div>
+            <div class="col-md-4">
+                {{ Bug.details }}
+            </div>
+            <div class="col-md-2">
+                {{ Bug.created }}
+            </div>
+            <div class="col-md-2">
+                <a href="/users/{{Bug.assigneeId}}/">Assignee</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

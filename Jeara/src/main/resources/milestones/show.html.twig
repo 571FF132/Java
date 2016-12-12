@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Milestone {{ milestone.title }}{% endblock %}
+
+{% block mainContainer %}
+    <div>
+        <h1>Milestone: {{ milestone.name }}</h1>
+        <p>
+            <strong>Created:</strong> {{ milestone.created }}
+        </p>
+        <p>
+            <strong>Due:</strong> {{ milestone.prettyDueDate }}
+        </p>
+        <p>
+            <strong>Progress:</strong> {{ milestone.progress }} % complete
+        </p>
+
+        <div class="container">
+            <h2>Bugs In Milestone</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Name</h2>
+                </div>
+                <div class="col-md-4">
+                    <h2>Status</h2>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+
+            {% for bug in milestone.bugs %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a>
+                    </div>
+                    <div class="col-md-4">
+                        {{ bug.status }}
+                    </div>
+                    <div class="col-md-4">
+                        <form action="/milestones/remove/" method="POST" style="display: inline">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+                            <input type="hidden" name="bug_id" value="{{ bug.bugId }}"/>
+                            <input type="hidden" name="milestone_id" value="{{ milestone.milestoneId }}"/>
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

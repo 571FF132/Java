@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Bugs{% endblock %}
+
+{% block mainContainer %}
+
+    <div class="container">
+        <h1>Edit Bug #{{ Bug.bugId }} {{ Bug.title }}</h1>
+        <form action="/bug/update/" class="form-horizontal" method="POST" id="bugform">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+            <input type="hidden" name="bug_id" value="{{ Bug.bugId }}"/>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Title:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="title" value="{{ Bug.title }}" placeholder="{{ Bug.title }}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Details:</label>
+                <div class="col-sm-8">
+                    <textarea name="details" class="form-control" form="bugform" rows="4" cols="50">{{ Bug.details }}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Assignee:</label>
+                <div class="col-sm-8">
+                    <select name="assignee_id" class="form-control">
+                        <option value="0">unassign</option>
+                        {% for user in users %}
+                            <option value="{{ user.userId }}" {% if user.userId equals Bug.assigneeId %} selected="selected" {%  endif %}>{{ user.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Milestone:</label>
+                <div class="col-sm-8">
+                    <select name="milestone_id" class="form-control">
+                        <option value="0">unassign</option>
+                        {% for milestone in milestones %}
+                            <option value="{{ milestone.milestoneId }}" {% if milestone.milestoneId equals Bug.milestoneId %} selected="selected" {%  endif %}>{{ milestone.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Status:</label>
+                <div class="col-sm-8">
+                    <select name="status" class="form-control">
+                        <option value="open" {% if Bug.status equals "open" %} selected="selected" {%  endif %}>open</option>
+                        <option value="closed" {% if Bug.status equals "closed" %} selected="selected" {%  endif %}>closed</option>
+                        <option value="rejected" {% if Bug.status equals "rejected" %} selected="selected" {%  endif %}>rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Update</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

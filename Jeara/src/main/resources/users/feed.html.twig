@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Users{% endblock %}
+{% block mainContainer %}
+
+<h1>{{ user.name }}'s NewsFeed </h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Notifications</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Assigned Bugs</h2>
+            <ul>
+                {% for bug in assignedBugs %}
+                    <li><a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h2>Bugs you are subscribed to!</h2>
+            <h3>SELECT A STATUS</h3>
+                <label><input type="button" value ="all"/></label>
+                <label><input type="button" value ="open"/></label>
+                <label><input type="button" value ="closed"/></label>
+                <label><input type="button" value ="rejected"/></label>
+            <div class="allstatus box">
+                <h3>All Bugs</h3>
+                <ul>
+                    {% for bug in subscribedBugs %}
+                        <li><a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="openstatus box">
+                <h3>Open Bugs</h3>
+                <ul>
+                    {% for bug in subscribedBugsOpen %}
+                        <li><a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="closedstatus box">
+                <h3>Closed Bugs</h3>
+                <ul>
+                    {% for bug in subscribedBugsClosed %}
+                        <li><a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="rejectedstatus box">
+                <h3>Rejected Bugs</h3>
+                <ul>
+                    {% for bug in subscribedBugsRej %}
+                        <li><a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h2>Bugs in Tags you are subscribed to!</h2>
+            <ul>
+                {% for bug in taggedBugs %}
+                    <li><a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a>  {{ bug.details }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+{% endblock %}

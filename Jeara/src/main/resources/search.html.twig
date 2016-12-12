@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Search{% endblock %}
+
+{% block mainContainer %}
+
+    <h1>Search Results</h1>
+    <form action="/search" method="get">
+        <label>Keywords: <input type="search" name="q" value="{{ query }}"></label>
+        <button type="submit">Search</button>
+    </form>
+
+    <ul style="list-style:none">
+        {% for bug in results %}
+            <li style="margin-top:10px; margin-bottom:20px">
+                <div>
+                    <a style="font-size:24px" href="/bugs/{{ bug.bugId }}">{{ bug.title }}</a>
+                    <br>
+                    <p style="margin:0"><span style="font-weight:bold">Status: </span>{{ bug.status }}</p>
+                    <p style="margin:0"><span style="font-weight:bold">Details: </span>{{ bug.details }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

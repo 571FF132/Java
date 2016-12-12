@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Bugs{% endblock %}
+
+{% block mainContainer %}
+    <div>
+        <h1>Bugs</h1>
+    </div>
+    <div>
+        <button type="button" onclick="location.href='/bug/new/'" class="btn btn-primary">New Bug</button>
+    </div>
+    <div>
+        <h1>Bugs by CREATOR</h1>
+    </div>
+    <div>
+        <h2>Browse Bugs by:</h2>||
+        <a href="/bugs">creation date(default)</a> ||
+        <a href="/creator"><b>CREATOR</b></a> ||
+        <a href="/tags">tags</a> ||
+        <a href="/assignee">assignee</a> ||
+        <a href="/status">status</a> ||
+    </div>
+    <h1></h1>
+    <div>
+        <ul>
+            {% for user in users %}
+                <li>
+                    <a href="/creator/{{user.userId}}/">{{ user.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

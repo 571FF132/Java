@@ -1,0 +1,137 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Bug {{ bug.title }}{% endblock %}
+
+{% block mainContainer %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Bug {{ Bug.bugId }}: {{ Bug.title }}
+                    {% if userBugSubscription is not empty %}
+                        <form action="/bugsubscription/destroy/" method="post" style="display: inline">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+                            <input type="hidden" name="bug_id" value="{{ Bug.bugId }}"/>
+                            <button type="submit" class="btn btn-warning">Unsubscribe</button>
+                        </form>
+                    {% else %}
+                        <form action="/bugsubscription/create/" method="post" style="display: inline">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+                            <input type="hidden" name="bug_id" value="{{ Bug.bugId }}"/>
+                            <button type="submit" class="btn btn-success">Subscribe</button>
+                        </form>
+                    {% endif %}
+                    <button type="button" onclick="location.href='/bug/edit/{{ Bug.bugId }}/'" class="btn btn-primary">Edit</button>
+                </h2>
+            </div>
+            <div class="col-md-12">
+                <strong>Creator:</strong>
+                <a href="/users/{{Bug.creatorId}}/">{{ Creator.name }}</a><br/>
+            </div>
+            <div class="col-md-12">
+                <strong>Status:</strong> {{ Bug.status }}
+            </div>
+            <div class="col-md-12">
+                <strong>Assignee:</strong>
+                <a href="/users/{{Bug.assigneeId}}/">{{ Assignee.name }}</a>
+            </div>
+            <div class="col-md-12">
+                <strong>Milestone:</strong>
+                <a href="/milestones/{{Bug.milestoneId}}/">{{ Milestone.name }}</a>
+            </div>
+
+            <div class="col-md-12">
+                <strong>Details:</strong><br/>
+                {{ Bug.details }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Tags:</strong>
+                {% for tag in Bug.tags %}
+                    <span class="tag">
+                        <button type="submit" onclick="location.href='/tags/{{tag.tagId}}/'" class="btn btn-default">
+                            {{ tag.title }}
+                        </button>
+                        &nbsp;
+                    </span>
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <form action="/bugtag/" class="form-horizontal" method="POST" id="bugtagform">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+                    <input type="hidden" name="bug_id" value="{{ Bug.bugId }}"/>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Assign a Tag:</label>
+                        <div class="col-sm-8">
+                            <select name="tag_id" class="form-control">
+                                {% for Tag in Tags %}
+                                    <option value="{{ Tag.tagId }}">{{ Tag.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Comments:</h2>
+            </div>
+        </div>
+
+        {% for comment in Comments %}
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="thumbnail">
+                        <img class="img-responsive user-photo" src="{{ comment.gravatarUrl }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>{{ comment.creatorName }}</strong> <span class="text-muted">commented on {{ comment.getPrettyCreatedDate }}</span>
+                        </div>
+                        <div class="panel-body">
+                            {{ comment.body }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            <form action="/comment/create/" class="form-horizontal" method="post" id="commentform">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+                <input type="hidden" name="creator_id" value="{{ userId }}"/>
+                <input type="hidden" name="bug_id" value="{{ Bug.bugId }}"/>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <label for="commentBody" class="col-md-8">Leave a comment:</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-8">
+                            <textarea rows="3" class="form-control" id="commentBody" name="body" placeholder="Leave a comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-8">
+                        <button type="submit" class="btn btn-default">Comment!</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

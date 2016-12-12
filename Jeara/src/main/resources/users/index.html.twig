@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Users{% endblock %}
+
+{% block mainContainer %}
+    <div class="container">
+        <h1>Users</h1>
+        <div class="row">
+            <div class="col-md-2">
+                <h2>Name</h2>
+            </div>
+            <div class="col-md-2">
+                <h2>Username</h2>
+            </div>
+            <div class="col-md-2">
+                <h2>Email</h2>
+            </div>
+            <div class="col-md-3">
+                <h2>Created</h2>
+            </div>
+        </div>
+
+        {% for user in users %}
+        <div class="row">
+            <div class="col-md-2">
+                <a href="/users/{{user.userId}}/">{{ user.name }}</a>
+            </div>
+            <div class="col-md-2">
+                {{ user.username }}
+            </div>
+            <div class="col-md-2">
+                {{ user.email }}
+            </div>
+            <div class="col-md-3">
+                {{ user.created }}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - Tag {{ Tag.title }}{% endblock %}
+
+{% block mainContainer %}
+    <div>
+        <h1>Tag {{ Tag.title }}</h1>
+        {% if userTagSubscription is not empty %}
+        <form action="/tagsubscription/destroy/" method="POST" style="display: inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+            <input type="hidden" name="tag_id" value="{{ Tag.tagId }}"/>
+            <button type="submit" class="btn btn-warning">Unsubscribe</button>
+        </form>
+        {% else %}
+        <form action="/tagsubscription/create/" method="POST" style="display: inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+            <input type="hidden" name="tag_id" value="{{ Tag.tagId }}"/>
+            <button type="submit" class="btn btn-success">Subscribe</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <h2>Bugs Tagged with "{{ Tag.title }}"</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Title</h2>
+            </div>
+            <div class="col-md-4">
+                <h2>Status</h2>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+        {% for bug in Bugs %}
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a>
+            </div>
+            <div class="col-md-4">
+                {{ bug.status }}
+            </div>
+            <div class="col-md-4">
+                <form action="/tags/untag/" method="POST" style="display: inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+                    <input type="hidden" name="bug_id" value="{{ bug.bugId }}"/>
+                    <input type="hidden" name="tag_id" value="{{ Tag.tagId }}"/>
+                    <button type="submit" class="btn btn-danger">Untag</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

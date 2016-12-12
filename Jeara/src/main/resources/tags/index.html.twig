@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block title %}Jeara - Tags{% endblock %}
+{% block mainContainer %}
+
+    <div>
+        <h1>
+            Tags
+            <button type="button" onclick="location.href='/tag/new/'" class="btn btn-primary">New Tag</button>
+        </h1>
+    </div>
+
+    {% for Tag in Tags %}
+        <div><a href="/tags/{{Tag.tagId}}/">{{ Tag.title }}</a></div>
+    {% endfor %}
+
+{% endblock %}

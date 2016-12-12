@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Jeara - User {{ showUser.username }}{% endblock %}
+
+{% block mainContainer %}
+    <h2>{{ showUser.name }}</h2>
+    <div>
+        <p><strong>Username:</strong> {{ showUser.username }}</p>
+        <p><strong>Email:</strong> {{ showUser.email }}</p>
+        {% if showUser.userId equals userId %}
+            <p><a href="/users/{{showUser.userId}}/feed/">Your Feed</a></p>
+        {% endif %}
+
+        <h3>Assigned Bugs</h3>
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Title</h3>
+            </div>
+            <div class="col-md-3">
+                <h3>Details</h3>
+            </div>
+            <div class="col-md-3">
+                <h3>Created</h3>
+            </div>
+            <div class="col-md-3">
+                <h3>Status</h3>
+            </div>
+        </div>
+
+        {% for bug in userBugs %}
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="/bugs/{{bug.bugId}}/">{{ bug.title }}</a>
+                </div>
+                <div class="col-md-3">
+                    {{ bug.details }}
+                </div>
+                <div class="col-md-3">
+                    {{ bug.created }}
+                </div>
+                <div class="col-md-3">
+                    {{ bug.status }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
